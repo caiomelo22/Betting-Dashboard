@@ -12,10 +12,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE,
     });
     await queryInterface.bulkInsert('sports', [
-      {name: 'Football'},
-      {name: 'Basketball'},
+      {name: 'Football', createdAt: new Date(), updatedAt: new Date() },
+      {name: 'Basketball', createdAt: new Date(), updatedAt: new Date()},
     ]);
   },
 

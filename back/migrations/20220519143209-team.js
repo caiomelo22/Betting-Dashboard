@@ -19,13 +19,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE,
     });
 
     const { readFile } = require('fs/promises');
     let teams = JSON.parse(await readFile(`src/utils/teams/nba.json`, "utf8"));
     let teamsToInsert = [];
     for (let i = 0; i < teams.length; i++) {
-      teamsToInsert.push({ name: teams[i].full_name, leagueId: 1 });
+      teamsToInsert.push({ name: teams[i].full_name, leagueId: 1, createdAt: new Date(), updatedAt: new Date() });
     }
     await queryInterface.bulkInsert('teams', teamsToInsert);
   },

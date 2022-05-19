@@ -1,5 +1,4 @@
 const database = require("../database/db");
-const League = require('./League').League;
 
 const Team = database.sequelize.define("teams", {
   leagueId: {
@@ -14,8 +13,6 @@ const Team = database.sequelize.define("teams", {
     allowNull: false,
   },
 });
-
-Team.belongsTo(League);
 
 module.exports = {
   Team

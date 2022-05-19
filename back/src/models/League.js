@@ -17,6 +17,7 @@ const League = database.sequelize.define("leagues", {
 });
 
 League.belongsTo(Sport, { as: 'sport' });
+Team.belongsTo(League);
 League.hasMany(Team, { foreignKey: 'leagueId', as: 'teams' });
 
 module.exports = {

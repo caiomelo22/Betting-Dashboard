@@ -1,5 +1,4 @@
 const database = require("../database/db");
-const Bet = require('./Bet').Bet;
 
 const BetMoneyline = database.sequelize.define("moneylinebets", {
   betId: {
@@ -15,7 +14,6 @@ const BetMoneyline = database.sequelize.define("moneylinebets", {
   },
 });
 
-BetMoneyline.belongsTo(Bet, {as: 'bet'});
 
 module.exports = {
   BetMoneyline

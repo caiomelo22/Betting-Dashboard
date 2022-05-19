@@ -22,7 +22,9 @@ module.exports = {
       line: {
         type: Sequelize.FLOAT,
         allowNull: false,
-      }
+      },
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE,
     });
   },
 

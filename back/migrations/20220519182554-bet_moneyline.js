@@ -18,7 +18,9 @@ module.exports = {
       prediction: {
         type: Sequelize.ENUM('Home', 'Away', 'Draw'),
         allowNull: false,
-      }
+      },
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE,
     });
   },
 

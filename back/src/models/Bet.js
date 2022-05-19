@@ -1,5 +1,7 @@
 const database = require("../database/db");
 const Match = require('./Match').Match;
+const BetMoneyline = require('./BetMoneyline').BetMoneyline;
+const BetTotal = require('./BetTotal').BetTotal;
 
 const Bet = database.sequelize.define("bets", {
   matchId: {
@@ -28,6 +30,12 @@ const Bet = database.sequelize.define("bets", {
 });
 
 Bet.belongsTo(Match, {as: 'match'});
+
+BetMoneyline.belongsTo(Bet, {as: 'bet'});
+Bet.hasOne(BetMoneyline, { as: 'moneyline' });
+
+BetTotal.belongsTo(Bet, { as: 'bet' });
+Bet.hasOne(BetTotal, { as: 'total' });
 
 module.exports = {
   Bet
