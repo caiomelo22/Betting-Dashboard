@@ -3,6 +3,7 @@ const Match = require('../models/Match').Match;
 const Team = require('../models/Team').Team;
 const BetMoneyline = require('../models/BetMoneyline').BetMoneyline;
 const BetTotal = require('../models/BetTotal').BetTotal;
+const moment = require('moment');
 
 const list = async (req, res) => {
   try {
@@ -18,13 +19,25 @@ const list = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const { matchId, value, odds, won, type, prediction, line } = req.body;
+  let { leagueId, homeTeamId, awayTeamId, matchDate, value, odds, won, type, prediction, line } = req.body;
 
   try {
 
+    let match = null;
+
+    matchDate = moment(matchDate);
+
+    match = await Match.findOne({ where: { leagueId, homeTeamId, awayTeamId, matchDate } });
+
+    if(!match) {
+      match = await Match.create({leagueId, homeTeamId, awayTeamId, matchDate});
+    }
+
+    const matchId = match.id;
+
     const newBet = await Bet.create({ matchId, value, odds, won, type });
 
-    const { betId } = newBet;
+    const betId = newBet.id;
 
     switch (type) {
       case 'Moneyline':

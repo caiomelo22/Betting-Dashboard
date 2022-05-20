@@ -8,6 +8,13 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      leagueId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'leagues', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
       homeTeamId: {
         type: Sequelize.INTEGER,
         allowNull: false,

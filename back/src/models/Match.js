@@ -1,9 +1,10 @@
 const database = require("../database/db");
 const Team = require('./Team').Team;
+const League = require('./League').League;
 
-const Match = database.sequelize.define("teams", {
+const Match = database.sequelize.define("matches", {
   leagueId: {
-    type: database.Sequelize.STRING,
+    type: database.Sequelize.INTEGER,
     allowNull: false,
     references: { model: 'leagues', key: 'id' },
     onUpdate: 'CASCADE',
@@ -37,6 +38,7 @@ const Match = database.sequelize.define("teams", {
   },
 });
 
+Match.belongsTo(League, { as: 'league' })
 Match.belongsTo(Team, { as: 'homeTeam' });
 Match.belongsTo(Team, { as: 'awayTeam' });
 
