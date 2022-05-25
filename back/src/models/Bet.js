@@ -21,6 +21,7 @@ const Bet = database.sequelize.define("bets", {
   },
   won: {
     type: database.Sequelize.BOOLEAN,
+    defaultValue: false,
     allowNull: false,
   },
   type: {

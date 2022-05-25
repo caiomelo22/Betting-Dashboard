@@ -1,13 +1,16 @@
 import ApiService from "@/services/ApiService";
 import GeneralServices from "@/services/GeneralServices";
+import AddBetDialog from "~/components/dialogs/AddBetDialog/index.vue";
 export default {
   name: 'Bets',
+  components: { AddBetDialog },
   data: () => ({
     generalServices: new GeneralServices(),
     api: new ApiService(),
     page: 1,
     totalPages: 1,
     loading: false,
+    dialog: false,
     bets: []
   }),
   computed: {

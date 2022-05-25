@@ -34,3 +34,24 @@
     }
   }
 }
+
+
+.text-field-label {
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.15px;
+}
+
+.text-field {
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.text-field-outer-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.15px;
+  margin-right: 8px;
+  margin-bottom: 24px;
+}

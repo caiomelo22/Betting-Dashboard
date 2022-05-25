@@ -1,44 +1,60 @@
 <template>
   <v-container>
-    <v-row v-if="loading" no-gutters style="padding: 12px; justify-content: center">
+    <div v-if="loading" class="row">
       <v-progress-circular size="20" color="#41b883" indeterminate />
-    </v-row>
-    <table v-else class="bets-data-table">
-      <thead>
-        <th v-for="(header, i) in bets_headers" :key="i">{{ header }}</th>
-      </thead>
-      <tbody>
-        <tr v-for="(bet, i) in bets" :key="i">
-          <td>
-            {{ generalServices.format_date(bet.match.matchDate) }}
-          </td>
-          <td>
-            {{ `${bet.match.homeTeam.name} x ${bet.match.awayTeam.name}` }}
-          </td>
-          <td>
-            {{ bet.type }}
-          </td>
-          <td>
-            {{ generalServices.format_value(bet.value) }}
-          </td>
-          <td>
-            <font-awesome-icon
-              v-if="bet.won"
-              :icon="['fa', 'check']"
-              style="color: green"
-            />
-            <font-awesome-icon
-              v-else
-              :icon="['fa', 'xmark']"
-              style="color: red"
-            />
-          </td>
-          <td>
-            {{ generalServices.format_value(bet.profit) }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    </div>
+    <div v-else>
+      <div class="row">
+        <v-btn color="#41b883" dark @click="dialog = true">
+          <font-awesome-icon
+            :icon="['fa', 'plus']"
+            style="color: white; margin-right: 8px"
+          />
+          Add Bet
+        </v-btn>
+      </div>
+      <table class="bets-data-table">
+        <thead>
+          <th v-for="(header, i) in bets_headers" :key="i">{{ header }}</th>
+        </thead>
+        <tbody>
+          <tr v-for="(bet, i) in bets" :key="i">
+            <td>
+              {{ generalServices.format_date(bet.match.matchDate) }}
+            </td>
+            <td>
+              {{ `${bet.match.homeTeam.name} x ${bet.match.awayTeam.name}` }}
+            </td>
+            <td>
+              {{ bet.type }}
+            </td>
+            <td>
+              {{ generalServices.format_value(bet.value) }}
+            </td>
+            <td>
+              <font-awesome-icon
+                v-if="bet.match.scoreHomeTeam == null"
+                :icon="['fa', 'arrows-rotate']"
+                style="color: blue"
+              />
+              <font-awesome-icon
+                v-else-if="bet.won"
+                :icon="['fa', 'check']"
+                style="color: green"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="['fa', 'xmark']"
+                style="color: red"
+              />
+            </td>
+            <td>
+              {{ generalServices.format_value(bet.profit) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <v-pagination
       v-model="page"
       color="#41b883"
@@ -47,10 +63,20 @@
       @input="change_page"
     >
     </v-pagination>
+    <v-dialog v-if="dialog" v-model="dialog">
+      <AddBetDialog />
+    </v-dialog>
   </v-container>
 </template>
 
 <script src="./index"></script>
 
 <style scoped>
+.bets-data-table {
+  margin-top: 16px;
+}
+.row {
+  padding: 12px;
+  justify-content: center;
+}
 </style>

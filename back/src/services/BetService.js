@@ -33,7 +33,7 @@ const list = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  let { leagueId, homeTeamId, awayTeamId, matchDate, value, odds, won, type, prediction, line } = req.body;
+  let { leagueId, homeTeamId, awayTeamId, matchDate, value, odds, type, prediction, line } = req.body;
 
   try {
 
@@ -49,7 +49,7 @@ const create = async (req, res) => {
 
     const matchId = match.id;
 
-    const newBet = await Bet.create({ matchId, value, odds, won, type });
+    const newBet = await Bet.create({ matchId, value, odds, type });
 
     const betId = newBet.id;
 
@@ -70,7 +70,7 @@ const create = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const { id, matchId, value, odds, won, type, prediction, line } = req.body;
+  const { id, matchId, value, odds, type, prediction, line } = req.body;
 
   try {
     const findBet = await Bet.findOne({ where: { id: id }, include: { all: true } })
@@ -79,7 +79,7 @@ const update = async (req, res) => {
       return { statusCode: 404, data: 'Bet not found.' }
     }
 
-    await findBet.update({ matchId, value, odds, won, type });
+    await findBet.update({ matchId, value, odds, type });
 
     switch (type) {
       case 'Moneyline':
