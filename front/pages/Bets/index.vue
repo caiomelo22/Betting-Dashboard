@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <table class="bets-data-table">
+    <v-row v-if="loading" no-gutters style="padding: 12px; justify-content: center">
+      <v-progress-circular size="20" color="#41b883" indeterminate />
+    </v-row>
+    <table v-else class="bets-data-table">
       <thead>
         <th v-for="(header, i) in bets_headers" :key="i">{{ header }}</th>
       </thead>
@@ -19,9 +22,16 @@
             {{ generalServices.format_value(bet.value) }}
           </td>
           <td>
-            <i class="fa-regular fa-user"></i>
-            <!-- <font-awesome-icon v-if="bet.won" icon class="fa-solid fa-check" />
-            <font-awesome-icon v-else icon class="fa-solid fa-x" /> -->
+            <font-awesome-icon
+              v-if="bet.won"
+              :icon="['fa', 'check']"
+              style="color: green"
+            />
+            <font-awesome-icon
+              v-else
+              :icon="['fa', 'xmark']"
+              style="color: red"
+            />
           </td>
           <td>
             {{ generalServices.format_value(bet.profit) }}
@@ -29,6 +39,14 @@
         </tr>
       </tbody>
     </table>
+    <v-pagination
+      v-model="page"
+      color="#41b883"
+      :length="totalPages"
+      style="margin-top: 16px"
+      @input="change_page"
+    >
+    </v-pagination>
   </v-container>
 </template>
 

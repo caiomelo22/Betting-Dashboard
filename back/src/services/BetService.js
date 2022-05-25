@@ -7,11 +7,25 @@ const moment = require('moment');
 
 const list = async (req, res) => {
   try {
-    let bets = [];
+    const page = parseInt(req.query.page);
 
-    bets = await Bet.findAll({ include: { model: Match, as: 'match', include: [{ model: Team, as: 'homeTeam' }, { model: Team, as: 'awayTeam' }] } });
+    const pageSize = 15
 
-    return { statusCode: 200, data: bets };
+    const { count, rows } = await Bet.findAndCountAll({
+      include: { model: Match, as: 'match', include: [{ model: Team, as: 'homeTeam' }, { model: Team, as: 'awayTeam' }] }, offset: page - 1, limit: pageSize, order: [
+        [{ model: Match, as: 'match' }, 'matchDate', 'DESC'],
+        ['updatedAt', 'DESC'],
+      ],
+    });
+
+    const totalPages = Math.ceil(count / pageSize);
+
+    const returnObject = {
+      totalPages,
+      bets: rows
+    }
+
+    return { statusCode: 200, data: returnObject };
   } catch (error) {
     console.log(error)
     return { statusCode: 500, data: 'An error has occured', error: error }
@@ -29,8 +43,8 @@ const create = async (req, res) => {
 
     match = await Match.findOne({ where: { leagueId, homeTeamId, awayTeamId, matchDate } });
 
-    if(!match) {
-      match = await Match.create({leagueId, homeTeamId, awayTeamId, matchDate});
+    if (!match) {
+      match = await Match.create({ leagueId, homeTeamId, awayTeamId, matchDate });
     }
 
     const matchId = match.id;
