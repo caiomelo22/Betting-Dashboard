@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <v-app>
     <NavBar />
-    <Nuxt />
+    <Nuxt class="main" />
     <Footer />
-  </div>
+  </v-app>
 </template>
 <script>
 import Footer from "@/components/core/Footer.vue";
@@ -15,3 +15,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.main {
+  padding-bottom: 45px;
+}
+</style>

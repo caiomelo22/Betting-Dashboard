@@ -11,15 +11,15 @@ export default {
   computed: {
     value: {
       get() {
-        if (this.Disabled && typeof this.FieldValue === "number") {
-          return this.FieldValue.toFixed(2);
+        if (this.disabled && typeof this.fieldValue === "number") {
+          return this.fieldValue.toFixed(2);
         }
-        return this.FieldValue;
+        return this.fieldValue;
       },
       set(newValue) {
         if (newValue === null || newValue === "") {
           this.$emit("update", 0);
-        } else if (this.Type === this.numberFieldEnum.Score) {
+        } else if (this.type === this.numberFieldEnum.Score) {
           this.$emit("update", parseInt(newValue));
         } else {
           this.$emit("update", parseFloat(newValue));
@@ -28,17 +28,17 @@ export default {
     }
   },
   props: {
-    FieldTitle: String,
-    FieldValue: Number,
-    Type: {
+    fieldTitle: String,
+    fieldValue: Number,
+    type: {
       type: Number,
       default: NumberFieldEnum.Score
     },
-    Required: {
+    required: {
       type: Boolean,
       default: true
     },
-    Disabled: {
+    disabled: {
       type: Boolean,
       default: false
     }

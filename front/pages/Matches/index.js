@@ -2,7 +2,7 @@ import ApiService from "@/services/ApiService";
 import GeneralServices from "@/services/GeneralServices";
 import AddBetDialog from "~/components/dialogs/AddBetDialog/index.vue";
 export default {
-  name: 'Bets',
+  name: 'Matches',
   components: { AddBetDialog },
   data: () => ({
     generalServices: new GeneralServices(),
@@ -11,13 +11,13 @@ export default {
     totalPages: 1,
     loading: false,
     dialog: false,
-    leagues: [],
-    bets: []
+    matchSelected: null,
+    matches: []
   }),
   computed: {
-    bets_headers() {
+    matches_headers() {
       return [
-        'Date', 'Matchup', 'Bet Type', 'Value', 'Won', 'Profit'
+        'Matchup', 'Date', 'Action'
       ]
     }
   },
@@ -25,35 +25,29 @@ export default {
     if (this.$route.query.page) {
       this.page = parseInt(this.$route.query.page);
     }
-    await this.get_bets();
-    await this.get_leagues();
+    await this.get_matches();
   },
   methods: {
-    async bet_added() {
+    match_click(match) {
+      this.matchSelected = match
+      this.dialog = true
+    },
+    async match_updated() {
       this.dialog = false
-      await this.get_bets()
+      await this.get_matches()
     },
     change_page() {
       this.$router.replace({
         query: { page: this.page }
       });
-      this.get_bets();
+      this.get_matches();
     },
-    async get_leagues() {
-      await this.$axios.get(`league/list`)
-        .then((resp) => {
-          this.leagues = resp.data
-        })
-        .catch((err) => {
-          this.$toast.error(err.message)
-        });
-    },
-    async get_bets() {
+    async get_matches() {
       this.loading = true
       const params = this.generalServices.serialize({ page: this.page });
-      await this.$axios.get(`bet/list?${params}`)
+      await this.$axios.get(`match/list?${params}`)
         .then((resp) => {
-          this.bets = resp.data.bets
+          this.matches = resp.data.matches
           this.totalPages = resp.data.totalPages
         })
         .catch((err) => {

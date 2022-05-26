@@ -1,24 +1,16 @@
 <template>
   <div>
-    <span
-      v-if="FieldTitle"
-      class="text-field-label"
-      :class="{ 'after-outer-text': Type == numberFieldEnum.Currency }"
-    >{{ FieldTitle }}</span>
-    <div :class="{ 'col-flex': Type == numberFieldEnum.Currency }">
-      <span
-        v-if="Type == numberFieldEnum.Currency"
-        class="text-field-outer-text"
-      >$</span>
+    <span v-if="fieldTitle" class="text-field-label">{{ fieldTitle }}</span>
+    <div :class="{ 'col-flex': type == numberFieldEnum.Currency }">
       <v-text-field
         v-model="value"
+        :prefix="type == numberFieldEnum.Currency ? '$' : ''"
         outlined
         dense
-        filled
-        :rules="Required ? [validationService.required(value)] : []"
+        :rules="required ? [validationService.required(value)] : []"
         type="number"
         class="text-field"
-        :disabled="Disabled"
+        :disabled="disabled"
       />
     </div>
   </div>

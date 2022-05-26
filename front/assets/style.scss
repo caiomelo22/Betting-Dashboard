@@ -1,5 +1,15 @@
 .footer {
-  position: fixed; bottom: 0; right: 0; height: 45px; width: 100%; line-height: 45px; z-index: 999; text-align: right !important; color: #41b883; font-size: 18px;     padding-right: 16px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 45px;
+  width: 100%;
+  line-height: 45px;
+  z-index: 999;
+  text-align: right !important;
+  color: #41b883;
+  font-size: 18px;
+  padding-right: 16px;
 }
 
 .active {
@@ -8,7 +18,7 @@
   border-radius: 4px;
 }
 
-.bets-data-table {
+.data-table {
   overflow: hidden;
   border-collapse: separate;
   border: 1px solid #DADADA;
@@ -16,7 +26,7 @@
   border-radius: 10px;
   width: 100%;
   border-collapse: collapse;
-  
+
   thead {
     font-size: 14px !important;
     letter-spacing: 0.15px;
@@ -25,9 +35,11 @@
     height: 36px;
     text-align: center;
   }
+
   tbody {
     background-color: aliceblue;
     text-align: center;
+
     tr {
       height: 47px !important;
       border-bottom: 1px solid #D5D8DF;
@@ -40,6 +52,7 @@
   font-size: 14px;
   line-height: 21px;
   letter-spacing: 0.15px;
+  font-weight: 800;
 }
 
 .text-field {
@@ -54,4 +67,38 @@
   letter-spacing: 0.15px;
   margin-right: 8px;
   margin-bottom: 24px;
+}
+
+.col-flex {
+  display: flex;
+  align-items: center;
+}
+
+.dialog-btn {
+  text-transform: none !important;
+  padding: 0px 24px !important;
+}
+
+.v-card {
+  padding: 12px !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 12px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

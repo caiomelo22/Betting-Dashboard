@@ -39,9 +39,10 @@ const create = async (req, res) => {
 
     let match = null;
 
-    matchDate = moment(matchDate);
+    matchDate = moment(matchDate).format();
 
     match = await Match.findOne({ where: { leagueId, homeTeamId, awayTeamId, matchDate } });
+    console.log(match)
 
     if (!match) {
       match = await Match.create({ leagueId, homeTeamId, awayTeamId, matchDate });

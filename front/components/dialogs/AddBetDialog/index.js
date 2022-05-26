@@ -10,6 +10,12 @@ export default {
         'Moneyline',
         'Total'
       ]
+    },
+    total_prediction_options() {
+      return [
+        'Over',
+        'Under'
+      ]
     }
   },
   data: () => ({
@@ -30,10 +36,15 @@ export default {
     numberFieldEnum: NumberFieldEnum
   }),
   props: {
-    Leagues: Array
+    leagues: Array
   },
   created() {
     this.bet.matchDate = this.$moment().format('YYYY-MM-DD')
+
+    if (this.leagues.length === 1) {
+      this.bet.leagueId = this.leagues[0].id
+      this.league_changed(this.leagues[0])
+    }
   },
   methods: {
     winner_prediction_changed() {
@@ -50,10 +61,10 @@ export default {
       if (!this.bet.leagueId) {
         return []
       }
-      const leagueSelected = this.Leagues.find(x => x.id === this.bet.leagueId)
+      const leagueSelected = this.leagues.find(x => x.id === this.bet.leagueId)
       return [
         leagueSelected.teams.find(x => x.id === this.bet.homeTeamId),
-        leagueSelected.teams.find(x => x.id === this.bet.homeTeamId)
+        leagueSelected.teams.find(x => x.id === this.bet.awayTeamId)
       ]
     },
     league_changed(league) {
@@ -61,8 +72,18 @@ export default {
       this.bet.awayTeamId = null;
       this.teamOptions = league.teams;
     },
-    submit() {
-
+    async submit() {
+      const result = this.$refs.form.validate();
+      if (!result) {
+        return;
+      }
+      await this.$axios.post(`bet/create`, this.bet)
+        .then((resp) => {
+          this.$emit('added')
+        })
+        .catch((err) => {
+          this.$toast.error(err.message)
+        });
     }
   }
 }

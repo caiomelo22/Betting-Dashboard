@@ -13,7 +13,7 @@
           Add Bet
         </v-btn>
       </div>
-      <table class="bets-data-table">
+      <table class="data-table">
         <thead>
           <th v-for="(header, i) in bets_headers" :key="i">{{ header }}</th>
         </thead>
@@ -54,17 +54,21 @@
           </tr>
         </tbody>
       </table>
+      <v-pagination
+        v-model="page"
+        color="#41b883"
+        :length="totalPages"
+        style="margin-top: 16px"
+        @input="change_page"
+      >
+      </v-pagination>
     </div>
-    <v-pagination
-      v-model="page"
-      color="#41b883"
-      :length="totalPages"
-      style="margin-top: 16px"
-      @input="change_page"
-    >
-    </v-pagination>
-    <v-dialog v-if="dialog" v-model="dialog">
-      <AddBetDialog />
+    <v-dialog v-if="dialog" v-model="dialog" max-width="100%" width="700px">
+      <AddBetDialog
+        :leagues="leagues"
+        @close="dialog = false"
+        @added="bet_added"
+      />
     </v-dialog>
   </v-container>
 </template>
@@ -72,7 +76,7 @@
 <script src="./index"></script>
 
 <style scoped>
-.bets-data-table {
+.data-table {
   margin-top: 16px;
 }
 .row {

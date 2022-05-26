@@ -1,18 +1,17 @@
 <template>
   <v-card>
     <v-card-title>Manage Bet</v-card-title>
-    <v-card-text>
-      <v-form ref="form" lazy-validation @submit.stop.prevent="submit">
+    <v-form ref="form" lazy-validation @submit.stop.prevent="submit">
+      <v-card-text>
         <div>
           <span class="text-field-label">League</span>
           <v-select
             v-model="bet.leagueId"
-            :items="Leagues"
+            :items="leagues"
             item-text="name"
             item-value="id"
             outlined
             dense
-            filled
             :rules="[validationService.required(bet.leagueId)]"
             class="text-field"
             @change="league_changed"
@@ -22,12 +21,12 @@
           <span class="text-field-label">Home Team</span>
           <v-select
             v-model="bet.homeTeamId"
+            :disabled="!bet.leagueId"
             :items="teamOptions.filter((x) => x.id != bet.awayTeamId)"
             item-text="name"
             item-value="id"
             outlined
             dense
-            filled
             :rules="[validationService.required(bet.homeTeamId)]"
             class="text-field"
           />
@@ -36,12 +35,12 @@
           <span class="text-field-label">Away Team</span>
           <v-select
             v-model="bet.awayTeamId"
+            :disabled="!bet.leagueId"
             :items="teamOptions.filter((x) => x.id != bet.homeTeamId)"
             item-text="name"
             item-value="id"
             outlined
             dense
-            filled
             :rules="[validationService.required(bet.awayTeamId)]"
             class="text-field"
           />
@@ -52,7 +51,6 @@
             v-model="bet.matchDate"
             outlined
             dense
-            filled
             hint="YYYY-MM-DD"
             :rules="[
               validationService.required(bet.matchDate),
@@ -81,9 +79,9 @@
           <span class="text-field-label">Bet Type</span>
           <v-select
             v-model="bet.type"
+            :items="bet_type_options"
             outlined
             dense
-            filled
             :rules="[validationService.required(bet.type)]"
             class="text-field"
           />
@@ -97,7 +95,6 @@
             item-value="id"
             outlined
             dense
-            filled
             :rules="[validationService.required(winnerPrediction)]"
             class="text-field"
             @change="winner_prediction_changed"
@@ -106,22 +103,34 @@
         <div v-else-if="bet.type == 'Total'">
           <div>
             <NumberField
-              field-title="Prediction"
-              :field-value="bet.prediction"
-              @update="(value) => (bet.prediction = value)"
-            />
-          </div>
-          <div>
-            <NumberField
               field-title="Line"
               :field-value="bet.line"
               @update="(value) => (bet.line = value)"
             />
           </div>
+          <div>
+            <span class="text-field-label">Prediction</span>
+            <v-select
+              v-model="bet.prediction"
+              :items="total_prediction_options"
+              outlined
+              dense
+              :rules="[validationService.required(bet.prediction)]"
+              class="text-field"
+            />
+          </div>
         </div>
-      </v-form>
-    </v-card-text>
-    <v-card-actions> </v-card-actions>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn color="red" class="dialog-btn" outlined @click="$emit('close')">
+          Cancel
+        </v-btn>
+        <v-btn color="green" class="dialog-btn" type="submit" dark>
+          Save
+        </v-btn>
+      </v-card-actions>
+    </v-form>
   </v-card>
 </template>
 <script src="./index"></script>
