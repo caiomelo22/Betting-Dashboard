@@ -31,6 +31,7 @@ export default {
       prediction: null,
       line: null
     },
+    loading: false,
     winnerPrediction: null,
     teamOptions: [],
     numberFieldEnum: NumberFieldEnum
@@ -77,6 +78,7 @@ export default {
       if (!result) {
         return;
       }
+      this.loading = true
       await this.$axios.post(`bet/create`, this.bet)
         .then((resp) => {
           this.$emit('added')
@@ -84,6 +86,7 @@ export default {
         .catch((err) => {
           this.$toast.error(err.message)
         });
+        this.loading = false
     }
   }
 }

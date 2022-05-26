@@ -126,7 +126,7 @@
         <v-btn color="red" class="dialog-btn" outlined @click="$emit('close')">
           Cancel
         </v-btn>
-        <v-btn color="green" class="dialog-btn" type="submit" dark>
+        <v-btn color="green" class="dialog-btn" type="submit" :loading="loading" dark>
           Save
         </v-btn>
       </v-card-actions>

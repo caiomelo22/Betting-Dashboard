@@ -30,10 +30,10 @@ const Bet = database.sequelize.define("bets", {
 });
 
 BetMoneyline.belongsTo(Bet, {as: 'bet'});
-Bet.hasOne(BetMoneyline, { as: 'moneyline' });
+Bet.hasOne(BetMoneyline, { foreignKey: 'betId', as: 'moneyline' });
 
 BetTotal.belongsTo(Bet, { as: 'bet' });
-Bet.hasOne(BetTotal, { as: 'total' });
+Bet.hasOne(BetTotal, { foreignKey: 'betId', as: 'total' });
 
 module.exports = {
   Bet

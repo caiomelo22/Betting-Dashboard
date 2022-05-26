@@ -1,6 +1,6 @@
 import ApiService from "@/services/ApiService";
 import GeneralServices from "@/services/GeneralServices";
-import AddBetDialog from "~/components/dialogs/AddBetDialog/index.vue";
+import AddBetDialog from "~/components/dialogs/AddBet/index.vue";
 export default {
   name: 'Bets',
   components: { AddBetDialog },
@@ -17,7 +17,7 @@ export default {
   computed: {
     bets_headers() {
       return [
-        'Date', 'Matchup', 'Bet Type', 'Value', 'Won', 'Profit'
+        'Date', 'Matchup', 'Bet Type', 'Value', 'Odds', 'Won', 'Profit'
       ]
     }
   },
@@ -29,6 +29,19 @@ export default {
     await this.get_leagues();
   },
   methods: {
+    get_bet_profit(bet) {
+      if (bet.match.scoreHomeTeam === null || bet.match.awayHomeTeam) {
+        return '-'
+      }
+
+      let profit = 0
+      if (bet.won) {
+        profit = bet.value * bet.odds - bet.value
+      } else {
+        profit -= bet.value
+      }
+      return this.generalServices.format_value(profit)
+    },
     async bet_added() {
       this.dialog = false
       await this.get_bets()

@@ -32,6 +32,9 @@
               {{ generalServices.format_value(bet.value) }}
             </td>
             <td>
+              {{ bet.odds }}
+            </td>
+            <td>
               <font-awesome-icon
                 v-if="bet.match.scoreHomeTeam == null"
                 :icon="['fa', 'arrows-rotate']"
@@ -49,7 +52,7 @@
               />
             </td>
             <td>
-              {{ generalServices.format_value(bet.profit) }}
+              {{ get_bet_profit(bet) }}
             </td>
           </tr>
         </tbody>

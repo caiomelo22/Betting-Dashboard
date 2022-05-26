@@ -5,9 +5,9 @@ export default class GeneralServices {
     if (value == null) {
       return '-'
     }
-    const formatter = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL"
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
     });
     return formatter.format(value);
   }

@@ -31,10 +31,17 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
+    '@nuxtjs/google-fonts',
     '@nuxtjs/eslint-module',
     '@nuxtjs/moment',
     '@nuxtjs/fontawesome'
   ],
+
+  googleFonts: {
+    families: {
+      Inter: [300, 500, 700]
+    }
+  },
 
   fontawesome: {
     icons: {

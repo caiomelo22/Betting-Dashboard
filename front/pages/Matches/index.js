@@ -1,9 +1,9 @@
 import ApiService from "@/services/ApiService";
 import GeneralServices from "@/services/GeneralServices";
-import AddBetDialog from "~/components/dialogs/AddBetDialog/index.vue";
+import UpdateMatchDialog from "~/components/dialogs/UpdateMatch/index.vue";
 export default {
   name: 'Matches',
-  components: { AddBetDialog },
+  components: { UpdateMatchDialog },
   data: () => ({
     generalServices: new GeneralServices(),
     api: new ApiService(),
