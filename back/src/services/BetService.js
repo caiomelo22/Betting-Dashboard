@@ -4,6 +4,7 @@ const Team = require('../models/Team').Team;
 const BetMoneyline = require('../models/BetMoneyline').BetMoneyline;
 const BetTotal = require('../models/BetTotal').BetTotal;
 const moment = require('moment');
+const { League } = require('../models/League');
 
 const list = async (req, res) => {
   try {
@@ -117,9 +118,63 @@ const remove = async (req, res) => {
   }
 };
 
+const dashboard = async (req, res) => {
+  try {
+    const bets = await Bet.findAll({
+      include: { model: Match, as: 'match', include: { model: League, as: 'league' } }, order: [
+        [{ model: Match, as: 'match' }, 'matchDate', 'ASC'],
+        ['updatedAt', 'DESC'],
+      ], group: ['match.matchDate'],
+    });
+
+    // Inicializando a estrutura base do gráfico utilizada pelo ChartJS
+    let chartInfo = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Bets Progression',
+          fill: false,
+          backgroundColor: '#41b883',
+          borderColor: '#41b883',
+          data: []
+        },
+      ]
+    }
+    let generalInfo = {
+      totalBet: 0,
+      totalProfit: 0
+    }
+
+    for (let i = 0; i < bets.length; i++) {
+      let betDate = moment(bets[i].match.matchDate).format('DD-MM-YYYY')
+      if (chartInfo.labels[chartInfo.labels.length - 1] != betDate) {
+        chartInfo.labels.push(betDate)
+        chartInfo.datasets[0].data.push(generalInfo.totalProfit)
+      }
+
+      if (bets[i].match.scoreHomeTeam !== null && bets[i].match.scoreAwayTeam !== null) {
+        generalInfo.totalBet += bets[i].value
+        if (bets[i].won) {
+          generalInfo.totalProfit += bets[i].value * bets[i].odds - bets[i].value
+          chartInfo.datasets[0].data[chartInfo.datasets[0].data.length - 1] += bets[i].value * bets[i].odds - bets[i].value
+        } else {
+          generalInfo.totalProfit -= bets[i].value
+          chartInfo.datasets[0].data[chartInfo.datasets[0].data.length - 1] -= bets[i].value
+        }
+      }
+    }
+
+    return { statusCode: 200, data: {chartInfo, generalInfo} };
+  } catch (error) {
+    console.log(error)
+    return { statusCode: 500, data: 'An error has occured', error: error }
+  }
+};
+
 module.exports = {
   list,
   create,
   update,
-  remove
+  remove,
+  dashboard
 }

@@ -1,18 +1,47 @@
 <template>
-  <div>
-    <h3 class="under-maintenance-text">This is the dashboard. It's currently under maintenance so you should come back later. It's gonna be awesome!</h3>
-  </div>
+  <v-container>
+    <v-row style="margin-bottom: 16px">
+      <v-col cols="12" md="6">
+        <div class="general-info">
+          <p class="dashboard-info-title">Total Bet</p>
+          <p class="dashboard-info-value">{{ generalServices.format_value(generalInfo.totalBet) }}</p>
+        </div>
+      </v-col>
+      <v-col cols="12" md="6">
+        <div class="general-info">
+          <p class="dashboard-info-title">Profit</p>
+          <p class="dashboard-info-value">{{ generalServices.format_value(generalInfo.totalProfit) }}</p>
+        </div>
+      </v-col>
+    </v-row>
+    <div>
+      <canvas id="lineChart" width="400" height="400"></canvas>
+    </div>
+  </v-container>
 </template>
 
-<script>
-export default {
-  name: 'Dashboard'
-}
+<script src="./index">
 </script>
 
 <style scoped>
-.under-maintenance-text {
-  padding: 24px;
-  text-align: center;
+p {
+  margin-bottom: 0px;
+}
+.dashboard-info-title,
+.dashboard-info-value {
+  font-weight: 700;
+}
+.dashboard-info-title {
+  font-size: 20px;
+  line-height: 0.7;
+}
+.dashboard-info-value {
+  font-size: 30px;
+  color: #41b883;
+}
+.general-info {
+  border: 1px solid;
+  padding: 16px;
+  box-shadow: 5px 10px #41b883;
 }
 </style>

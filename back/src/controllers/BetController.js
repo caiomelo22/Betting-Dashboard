@@ -20,9 +20,15 @@ const remove = async (req, res) => {
     return res.status(response.statusCode).json(response.data);
 };
 
+const dashboard = async (req, res) => {
+    const response = await _betService.dashboard(req, res);
+    return res.status(response.statusCode).json(response.data);
+};
+
 module.exports = {
     list,
     create,
     update,
-    remove
+    remove,
+    dashboard
 }
