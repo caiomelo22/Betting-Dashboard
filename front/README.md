@@ -1,4 +1,4 @@
-# front
+# Frontend
 
 ## Build Setup
 
