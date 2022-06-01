@@ -1,2 +1,2 @@
 # Betting-Dashboard
-Dashboard developed in order to keep track of your past bets.
+Dashboard developed with NodeJS and NuxtJS in order to keep track of your past bets.
