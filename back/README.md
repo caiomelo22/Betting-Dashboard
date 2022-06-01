@@ -6,7 +6,7 @@
 # install dependencies
 $ yarn install
 
-# Serve with hot reload at localhost:8080
-$ yarn start
+# Serve with hot reload at localhost:3000
+$ yarn run start
 
 ```
