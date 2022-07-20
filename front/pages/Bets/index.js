@@ -17,7 +17,7 @@ export default {
   computed: {
     bets_headers() {
       return [
-        'Date', 'Matchup', 'Bet Type', 'Value', 'Odds', 'Won', 'Profit'
+        'Date', 'Matchup', 'Bet Type', 'Prediction', 'Value', 'Odds', 'Won', 'Profit'
       ]
     }
   },
@@ -29,6 +29,14 @@ export default {
     await this.get_leagues();
   },
   methods: {
+    get_bet_prediction(bet) {
+      switch (bet.type) {
+        case 'Moneyline':
+          return bet.moneyline.prediction;
+        case 'Total':
+          return bet.total.prediction;
+      }
+    },
     get_bet_profit(bet) {
       if (bet.match.scoreHomeTeam === null || bet.match.awayHomeTeam) {
         return '-'

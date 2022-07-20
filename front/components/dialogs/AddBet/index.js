@@ -56,6 +56,9 @@ export default {
         case this.bet.awayTeamId:
           this.bet.prediction = 'Away'
           break;
+        case 0:
+          this.bet.prediction = 'Draw'
+          break;
       }
     },
     get_winner_options() {
@@ -65,10 +68,12 @@ export default {
       const leagueSelected = this.leagues.find(x => x.id === this.bet.leagueId)
       return [
         leagueSelected.teams.find(x => x.id === this.bet.homeTeamId),
-        leagueSelected.teams.find(x => x.id === this.bet.awayTeamId)
+        leagueSelected.teams.find(x => x.id === this.bet.awayTeamId),
+        { name: 'Draw', id: 0 }
       ]
     },
-    league_changed(league) {
+    league_changed(leagueId) {
+      const league = this.leagues.find(x => x.id === leagueId)
       this.bet.homeTeamId = null;
       this.bet.awayTeamId = null;
       this.teamOptions = league.teams;
@@ -86,7 +91,7 @@ export default {
         .catch((err) => {
           this.$toast.error(err.message)
         });
-        this.loading = false
+      this.loading = false
     }
   }
 }

@@ -29,6 +29,9 @@
               {{ bet.type }}
             </td>
             <td>
+              {{ get_bet_prediction(bet) }}
+            </td>
+            <td>
               {{ generalServices.format_value(bet.value) }}
             </td>
             <td>
