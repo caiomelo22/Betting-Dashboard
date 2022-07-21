@@ -124,7 +124,7 @@ const dashboard = async (req, res) => {
       include: { model: Match, as: 'match', include: { model: League, as: 'league' } }, order: [
         [{ model: Match, as: 'match' }, 'matchDate', 'ASC'],
         ['updatedAt', 'DESC'],
-      ], group: ['match.matchDate'],
+      ],
     });
 
     // Inicializando a estrutura base do gráfico utilizada pelo ChartJS
