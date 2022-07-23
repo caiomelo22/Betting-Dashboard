@@ -23,6 +23,11 @@
               {{ generalServices.format_date(bet.match.matchDate) }}
             </td>
             <td>
+              {{
+                bet.match.league.name
+              }}
+            </td>
+            <td>
               {{ `${bet.match.homeTeam.name} x ${bet.match.awayTeam.name}` }}
             </td>
             <td>

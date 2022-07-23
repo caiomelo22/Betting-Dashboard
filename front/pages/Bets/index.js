@@ -17,7 +17,7 @@ export default {
   computed: {
     bets_headers() {
       return [
-        'Date', 'Matchup', 'Bet Type', 'Prediction', 'Value', 'Odds', 'Won', 'Profit'
+        'Date', 'League', 'Matchup', 'Bet Type', 'Prediction', 'Value', 'Odds', 'Won', 'Profit'
       ]
     }
   },
