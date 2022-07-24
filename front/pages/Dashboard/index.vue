@@ -1,6 +1,32 @@
 <template>
   <v-container>
     <v-row style="margin-bottom: 16px">
+      <v-col cols="12" md="3">
+        <div class="general-info">
+          <p class="dashboard-info-title">Total Bets</p>
+          <p class="dashboard-info-value">{{ generalInfo.totalReds + generalInfo.totalGreens }}</p>
+        </div>
+      </v-col>
+      <v-col cols="12" md="3">
+        <div class="general-info">
+          <p class="dashboard-info-title">Total Reds</p>
+          <p class="dashboard-info-value" style="color: red">{{ generalInfo.totalReds }}</p>
+        </div>
+      </v-col>
+      <v-col cols="12" md="3">
+        <div class="general-info">
+          <p class="dashboard-info-title">Total Greens</p>
+          <p class="dashboard-info-value" style="color: green">{{ generalInfo.totalGreens }}</p>
+        </div>
+      </v-col>
+      <v-col cols="12" md="3">
+        <div class="general-info">
+          <p class="dashboard-info-title">Green %</p>
+          <p class="dashboard-info-value">{{ generalInfo.totalGreens * 100 / (generalInfo.totalReds + generalInfo.totalGreens) }}%</p>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row style="margin-bottom: 16px">
       <v-col cols="12" md="6">
         <div class="general-info">
           <p class="dashboard-info-title">Total Bet</p>

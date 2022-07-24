@@ -142,7 +142,9 @@ const dashboard = async (req, res) => {
     }
     let generalInfo = {
       totalBet: 0,
-      totalProfit: 0
+      totalProfit: 0,
+      totalGreens: 0,
+      totalReds: 0
     }
 
     for (let i = 0; i < bets.length; i++) {
@@ -155,9 +157,11 @@ const dashboard = async (req, res) => {
       if (bets[i].match.scoreHomeTeam !== null && bets[i].match.scoreAwayTeam !== null) {
         generalInfo.totalBet += bets[i].value
         if (bets[i].won) {
+          generalInfo.totalGreens += 1
           generalInfo.totalProfit += bets[i].value * bets[i].odds - bets[i].value
           chartInfo.datasets[0].data[chartInfo.datasets[0].data.length - 1] += bets[i].value * bets[i].odds - bets[i].value
         } else {
+          generalInfo.totalReds += 1
           generalInfo.totalProfit -= bets[i].value
           chartInfo.datasets[0].data[chartInfo.datasets[0].data.length - 1] -= bets[i].value
         }
